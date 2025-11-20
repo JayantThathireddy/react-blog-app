@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function CommentSection({ initialComments = [], postId }) {
     const [name, setName] = useState("");
     const [comment, setComment] = useState("");
+    const { user } = useAuth();
     // Normalize incoming initial comments so each item has { name, text }
     const normalize = (c) => (c && c.body ? { name: c.name || "Anonymous", text: c.body } : c);
     const [comments, setComments] = useState(initialComments.map(normalize));
@@ -59,56 +62,64 @@ function CommentSection({ initialComments = [], postId }) {
    return (
        <div style={sectionStyle}>
            <h3 style={{ color: "#333", marginBottom: "15px" }}>Comments</h3>
-           <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-               <input
-                   type="text"
-                   value={name}
-                   onChange={(e) => setName(e.target.value)}
-                   placeholder="Your Name"
-                   required
-                   style={{
-                       width: "100%",
-                       padding: "12px",
-                       borderRadius: "4px",
-                       border: "1px solid #ddd",
-                       marginBottom: "10px",
-                       fontSize: "14px",
-                       fontFamily: "Arial, Helvetica, sans-serif",
-                   }}
-               />
-               <textarea
-                   value={comment}
-                   onChange={(e) => setComment(e.target.value)}
-                   placeholder="Add a comment"
-                   required
-                   style={{
-                       width: "100%",
-                       padding: "12px",
-                       borderRadius: "4px",
-                       border: "1px solid #ddd",
-                       marginBottom: "10px",
-                       minHeight: "80px",
-                       fontSize: "14px",
-                       fontFamily: "Arial, Helvetica, sans-serif",
-                       resize: "vertical",
-                   }}
-               />
-               <button
-                   type="submit"
-                   style={{
-                       backgroundColor: "#f5a623",
-                       color: "white",
-                       border: "none",
-                       padding: "10px 24px",
-                       borderRadius: "4px",
-                       cursor: "pointer",
-                       fontSize: "14px",
-                       fontWeight: "500",
-                   }}
-               >
-                   Submit
-               </button>
-           </form>
+           
+           {user ? (
+               <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+                   <input
+                       type="text"
+                       value={name}
+                       onChange={(e) => setName(e.target.value)}
+                       placeholder="Your Name"
+                       required
+                       style={{
+                           width: "100%",
+                           padding: "12px",
+                           borderRadius: "4px",
+                           border: "1px solid #ddd",
+                           marginBottom: "10px",
+                           fontSize: "14px",
+                           fontFamily: "Arial, Helvetica, sans-serif",
+                       }}
+                   />
+                   <textarea
+                       value={comment}
+                       onChange={(e) => setComment(e.target.value)}
+                       placeholder="Add a comment"
+                       required
+                       style={{
+                           width: "100%",
+                           padding: "12px",
+                           borderRadius: "4px",
+                           border: "1px solid #ddd",
+                           marginBottom: "10px",
+                           minHeight: "80px",
+                           fontSize: "14px",
+                           fontFamily: "Arial, Helvetica, sans-serif",
+                           resize: "vertical",
+                       }}
+                   />
+                   <button
+                       type="submit"
+                       style={{
+                           backgroundColor: "#f5a623",
+                           color: "white",
+                           border: "none",
+                           padding: "10px 24px",
+                           borderRadius: "4px",
+                           cursor: "pointer",
+                           fontSize: "14px",
+                           fontWeight: "500",
+                       }}
+                   >
+                       Submit
+                   </button>
+               </form>
+           ) : (
+               <p style={{ color: "#666", marginBottom: "20px", fontStyle: "italic" }}>
+                   Please <Link to="/login" style={{ color: "#4a76cf" }}>login</Link> to leave a comment.
+               </p>
+           )}
+
            <h4 style={{ color: "#333", marginBottom: "10px" }}>Existing Comments:</h4>
            {comments.length === 0 ? (
                <p style={{ color: "#666", fontStyle: "italic" }}>

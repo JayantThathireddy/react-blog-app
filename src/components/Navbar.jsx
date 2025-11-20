@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 
 
 function Navbar() {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { user, logout } = useAuth();
 
 
   const navStyle = {
@@ -40,7 +42,18 @@ function Navbar() {
   return (
     <nav style={navStyle}>
       <Link to="/" style={linkStyle}>Home</Link>
+      <Link to="/blog" style={linkStyle}>Blog</Link>
       <Link to="/contact" style={linkStyle}>Contact</Link>
+      
+      {user ? (
+        <>
+          <span style={{ color: theme === "dark" ? "#fff" : "#333" }}>Welcome, {user.username}</span>
+          <button onClick={logout} style={{ ...buttonStyle, backgroundColor: "#d9534f" }}>Logout</button>
+        </>
+      ) : (
+        <Link to="/login" style={linkStyle}>Login</Link>
+      )}
+
       <button onClick={toggleTheme} style={buttonStyle}>
         Toggle {theme === "dark" ? "Light" : "Dark"} Mode
       </button>

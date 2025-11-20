@@ -30,7 +30,7 @@ function IndividualPostPage() {
 
   return (
     <div>
-      <Link to="/">← Back to Posts</Link>
+      <Link to="/blog">← Back to Posts</Link>
 
       <BlogPost
         title={post.title}

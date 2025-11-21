@@ -20,13 +20,16 @@ function CommentSection({ initialComments = [], postId }) {
    
    const handleSubmit = (e) => {
       e.preventDefault();
-      if (name.trim() !== "" && comment.trim() !== "") {
-          const newComment = { name: name.trim(), text: comment.trim() };
+      // Use logged-in user's name if available, otherwise fallback to name state (though form is hidden if not logged in)
+      const authorName = user ? user.username : name.trim();
+
+      if (authorName && comment.trim() !== "") {
+          const newComment = { name: authorName, text: comment.trim() };
           
           // If postId is provided, POST to API
           if (postId) {
               const apiComment = {
-                  name: name.trim(),
+                  name: authorName,
                   body: comment.trim(),
                   postId: postId,
               };
@@ -65,22 +68,9 @@ function CommentSection({ initialComments = [], postId }) {
            
            {user ? (
                <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-                   <input
-                       type="text"
-                       value={name}
-                       onChange={(e) => setName(e.target.value)}
-                       placeholder="Your Name"
-                       required
-                       style={{
-                           width: "100%",
-                           padding: "12px",
-                           borderRadius: "4px",
-                           border: "1px solid #ddd",
-                           marginBottom: "10px",
-                           fontSize: "14px",
-                           fontFamily: "Arial, Helvetica, sans-serif",
-                       }}
-                   />
+                   <p style={{ marginBottom: "10px", color: "#666", fontSize: "14px" }}>
+                       Commenting as: <strong>{user.username}</strong>
+                   </p>
                    <textarea
                        value={comment}
                        onChange={(e) => setComment(e.target.value)}

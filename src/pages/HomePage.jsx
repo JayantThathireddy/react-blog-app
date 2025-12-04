@@ -54,7 +54,7 @@ function HomePage() {
     <div style={containerStyle}>
       <h1 style={headingStyle}>Welcome to The Blog</h1>
       <p style={subHeadingStyle}>
-        Discover interesting stories, share your thoughts, and connect with a community of readers.
+        Find interesting stories, share your thoughts, and connect with a community of readers.
         Join us today to start your journey!
       </p>
       <div style={buttonContainerStyle}>

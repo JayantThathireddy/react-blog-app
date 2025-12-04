@@ -5,6 +5,6 @@ function Header(){
        color:"white",
        padding:"20px",
    };
-   return <header style={headerStyle}><h1>My Blog</h1></header>;
+   return <header style={headerStyle}><h1>The Blog</h1></header>;
 }
 export default Header;

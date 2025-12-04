@@ -52,7 +52,7 @@ function HomePage() {
 
   return (
     <div style={containerStyle}>
-      <h1 style={headingStyle}>Welcome to My Blog App</h1>
+      <h1 style={headingStyle}>Welcome to The Blog</h1>
       <p style={subHeadingStyle}>
         Discover interesting stories, share your thoughts, and connect with a community of readers.
         Join us today to start your journey!

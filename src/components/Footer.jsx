@@ -9,7 +9,7 @@ function Footer() {
    
    return (
        <footer style={footerStyle}>
-           <p style={{ margin: 0, fontSize: "14px" }}>© 2025 My Blog</p>
+           <p style={{ margin: 0, fontSize: "14px" }}>© 2025 The Blog</p>
        </footer>
    );
 }
